@@ -1,0 +1,9 @@
+# build artifacts
+*.o
+vmlinux.h
+*.skel.h
+bin/
+# secrets (không bao giờ commit)
+*.pem
+*.key
+kubeconfig*
