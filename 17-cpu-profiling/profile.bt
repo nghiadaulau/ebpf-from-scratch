@@ -1,0 +1,9 @@
+// CPU profiling by sampling: a perf_event program fires at 99 Hz on every CPU,
+// captures the running stack, and aggregates it in-kernel. Basis of flame graphs.
+
+// 1. Hot KERNEL stacks (which kernel paths burn CPU)
+profile:hz:99 { @[kstack] = count(); }
+
+// 2. Per-process samples (run separately): who is on-CPU
+//    profile:hz:99 { @samples[comm] = count(); }
+//    swapper/N samples = CPU N was idle.
