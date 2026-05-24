@@ -1,0 +1,8 @@
+# bpf2go-generated (run `go generate` to recreate)
+connmon_bpfel.go
+connmon_bpfeb.go
+connmon_bpfel.o
+connmon_bpfeb.o
+# build output / generated header
+connmon
+vmlinux.h
