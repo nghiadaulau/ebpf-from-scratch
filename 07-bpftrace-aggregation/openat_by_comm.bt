@@ -1,0 +1,3 @@
+#!/usr/bin/env bpftrace
+// Count openat() syscalls per process. In-kernel aggregation; prints on exit.
+tracepoint:syscalls:sys_enter_openat { @opens[comm] = count(); }

@@ -1,0 +1,8 @@
+#!/usr/bin/env bpftrace
+// Histogram of vfs_read() latency. kprobe stores entry time keyed by tid;
+// kretprobe computes the delta and feeds a power-of-2 histogram.
+kprobe:vfs_read { @s[tid] = nsecs; }
+kretprobe:vfs_read /@s[tid]/ {
+	@ns = hist(nsecs - @s[tid]);
+	delete(@s[tid]);
+}
