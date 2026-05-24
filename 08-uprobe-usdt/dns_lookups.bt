@@ -1,0 +1,5 @@
+#!/usr/bin/env bpftrace
+// Trace hostname resolutions via libc getaddrinfo (a userspace function).
+uprobe:/usr/lib/x86_64-linux-gnu/libc.so.6:getaddrinfo {
+	printf("%-16s resolving %s\n", comm, str(arg0));
+}
