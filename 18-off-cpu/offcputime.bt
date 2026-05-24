@@ -1,0 +1,8 @@
+// Off-CPU time: how long a task stays off-CPU each time it yields.
+// This is blocked/waiting time (I/O, locks, sleep) — invisible to on-CPU profiling.
+tracepoint:sched:sched_switch {
+  @off[args.prev_pid] = nsecs;                          // went off-CPU
+  $t = @off[args.next_pid];
+  if ($t) { @offcpu_ms = hist((nsecs - $t) / 1000000); delete(@off[args.next_pid]); }
+}
+// Tip: key the off-CPU timestamp by kstack instead of pid to get off-CPU-by-stack.

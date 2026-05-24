@@ -1,0 +1,8 @@
+// Run-queue latency: time from a task being woken to actually running on a CPU.
+// This is scheduler/CPU-contention delay (not the task waiting on something itself).
+tracepoint:sched:sched_wakeup     { @qt[args.pid] = nsecs; }
+tracepoint:sched:sched_wakeup_new { @qt[args.pid] = nsecs; }
+tracepoint:sched:sched_switch /@qt[args.next_pid]/ {
+  @runq_us = hist((nsecs - @qt[args.next_pid]) / 1000);   // microseconds
+  delete(@qt[args.next_pid]);
+}
